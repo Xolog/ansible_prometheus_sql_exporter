@@ -1,0 +1,20 @@
+---
+- name: Exporters | SQL Exporter | Ensure configfile dir
+  become: true
+  become_user: root
+  file:
+    path: "{{ sql_exporter_config_dir }}"
+    state: directory
+    mode: 0755
+    owner: root
+    group: root
+
+- name: Exporters | SQL Exporter | Copy SQL exporter config file
+  template:
+    src: config.yml.j2
+    dest: "{{ sql_exporter_config_dir }}/{{ sql_exporter_config_file_name }}"
+    mode: 0644
+    owner: root
+    group: root
+  notify:
+    - Restart sql exporter docker

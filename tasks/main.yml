@@ -1,0 +1,7 @@
+---
+- name: Exporters | SQL Exporter | Configure exporter
+  import_tasks: configure.yml
+
+- name: Exporters | SQL Exporter | Install exporter
+  import_tasks: run_in_docker.yml
+  when: sql_exporter_run_in_docker

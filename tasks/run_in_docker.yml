@@ -1,0 +1,25 @@
+---
+- name: Exporters | SQL Exporter | Start SQL Exporter container
+  community.docker_compose_v2:
+    state: present
+    project_name: prometheus_sql_exporter
+    definition:
+      services:
+        sql_exporter:
+          image: "{{ sql_exporter_docker_image }}"
+          command:
+            - '-config.file=/etc/sql_exporter/{{ sql_exporter_config_file_name }}'
+            - '-config.check'
+            - '-web.listen-address {{ sql_exporter_host_address }}:{{ sql_exporter_host_port }}'
+          container_name: "{{ sql_exporter_container_name }}"
+          extra_hosts: "{{ sql_exporter_extra_hosts }}"
+          hostname: "{{ ansible_host }}"
+          restart: always
+          labels: "{{ sql_exporter_docker_labels }}"
+          network_mode: host
+          volumes:
+            - "{{ sql_exporter_config_dir }}:/etc/sql_exporter/"
+      networks:
+        default:
+          external:
+            name: "{{ sql_exporter_docker_network_name }}"
