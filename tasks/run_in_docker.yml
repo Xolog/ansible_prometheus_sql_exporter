@@ -12,6 +12,8 @@
             - '-config.check'
             - '-web.listen-address {{ sql_exporter_host_address }}:{{ sql_exporter_host_port }}'
           container_name: "{{ sql_exporter_container_name }}"
+          ports:
+            - "9399:9399"
           extra_hosts: "{{ sql_exporter_extra_hosts }}"
           hostname: "{{ ansible_host }}"
           restart: always
