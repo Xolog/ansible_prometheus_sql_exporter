@@ -39,7 +39,7 @@
           command:
             - '-config.file=/etc/sql_exporter/{{ sql_exporter_config_file_name }}'
             - '-config.check'
-            - '-web.listen-address {{ sql_exporter_host_address }}:{{ sql_exporter_host_port }}'
+            - '-web.listen-address "{{ sql_exporter_host_address }}:{{ sql_exporter_host_port }}"'
             - '{{ sql_exporter_additional_cmd_args }}'
           container_name: "{{ sql_exporter_container_name }}"
           ports:
