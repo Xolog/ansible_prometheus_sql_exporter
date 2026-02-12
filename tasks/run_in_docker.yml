@@ -11,6 +11,7 @@
             - '-config.file=/etc/sql_exporter/{{ sql_exporter_config_file_name }}'
             - '-config.check'
             - '-web.listen-address {{ sql_exporter_host_address }}:{{ sql_exporter_host_port }}'
+            - '{{ sql_exporter_additional_cmd_args }}'
           container_name: "{{ sql_exporter_container_name }}"
           ports:
             - "9399:9399"
@@ -25,3 +26,34 @@
         default:
           external:
             name: "{{ sql_exporter_docker_network_name }}"
+  when: not sql_exporter_use_db_tls
+
+- name: Exporters | SQL Exporter | Start SQL Exporter container with db tls
+  community.docker_compose_v2:
+    state: present
+    project_name: prometheus_sql_exporter
+    definition:
+      services:
+        sql_exporter:
+          image: "{{ sql_exporter_docker_image }}"
+          command:
+            - '-config.file=/etc/sql_exporter/{{ sql_exporter_config_file_name }}'
+            - '-config.check'
+            - '-web.listen-address {{ sql_exporter_host_address }}:{{ sql_exporter_host_port }}'
+            - '{{ sql_exporter_additional_cmd_args }}'
+          container_name: "{{ sql_exporter_container_name }}"
+          ports:
+            - "9399:9399"
+          extra_hosts: "{{ sql_exporter_extra_hosts }}"
+          hostname: "{{ ansible_host }}"
+          restart: always
+          labels: "{{ sql_exporter_docker_labels }}"
+          network_mode: host
+          volumes:
+            - "{{ sql_exporter_config_dir }}:/etc/sql_exporter/"
+            - "{{ sql_exporter_db_cert_dir }}:/etc/sql_exporter/"
+      networks:
+        default:
+          external:
+            name: "{{ sql_exporter_docker_network_name }}"
+  when: sql_exporter_use_db_tls

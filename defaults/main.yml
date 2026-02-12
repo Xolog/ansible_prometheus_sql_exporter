@@ -210,3 +210,7 @@ sql_exporter_config:
   # Collector files specifies a list of globs. One collector definition per file.
   collector_files: 
     - "*.collector.yml"
+
+# Set using TLS for connection to database
+sql_exporter_use_db_tls: False
+sql_exporter_db_cert_dir: "/opt/db_cert"
