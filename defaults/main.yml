@@ -27,7 +27,7 @@ sql_exporter_extra_hosts:
 sql_exporter_docker_network_name: prom_network
 
 # Args for command line when exporter starts
-sql_exporter_additional_cmd_args: 
+sql_exporter_additional_cmd_args: ""
   # -config.data-source-name string
   #       Data source name to override the value in the configuration file with
   # -config.enable-ping
@@ -218,3 +218,4 @@ sql_exporter_config:
 # Set using TLS for connection to database
 sql_exporter_use_db_tls: False
 sql_exporter_db_cert_dir: "/opt/db_cert"
+sql_exporter_db_cert_name: "cert.crt"

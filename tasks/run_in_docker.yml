@@ -10,7 +10,7 @@
           command:
             - '-config.file=/etc/sql_exporter/{{ sql_exporter_config_file_name }}'
             - '-config.check'
-            - '-web.listen-address {{ sql_exporter_host_address }}:{{ sql_exporter_host_port }}'
+            - '-web.listen-address={{ sql_exporter_host_address }}:{{ sql_exporter_host_port }}'
             - '{{ sql_exporter_additional_cmd_args }}'
           container_name: "{{ sql_exporter_container_name }}"
           ports:
@@ -21,11 +21,11 @@
           labels: "{{ sql_exporter_docker_labels }}"
           network_mode: host
           volumes:
-            - "{{ sql_exporter_config_dir }}:/etc/sql_exporter/"
+            - "{{ sql_exporter_config_dir }}/{{ sql_exporter_config_file_name }}:/etc/sql_exporter/{{ sql_exporter_config_file_name }}"
       networks:
         default:
-          external:
-            name: "{{ sql_exporter_docker_network_name }}"
+          external: true
+          name: "{{ sql_exporter_docker_network_name }}"
   when: not sql_exporter_use_db_tls
 
 - name: Exporters | SQL Exporter | Start SQL Exporter container with db tls
@@ -39,7 +39,7 @@
           command:
             - '-config.file=/etc/sql_exporter/{{ sql_exporter_config_file_name }}'
             - '-config.check'
-            - '-web.listen-address "{{ sql_exporter_host_address }}:{{ sql_exporter_host_port }}"'
+            - '-web.listen-address={{ sql_exporter_host_address }}:{{ sql_exporter_host_port }}'
             - '{{ sql_exporter_additional_cmd_args }}'
           container_name: "{{ sql_exporter_container_name }}"
           ports:
@@ -50,10 +50,10 @@
           labels: "{{ sql_exporter_docker_labels }}"
           network_mode: host
           volumes:
-            - "{{ sql_exporter_config_dir }}:/etc/sql_exporter/"
-            - "{{ sql_exporter_db_cert_dir }}:/etc/sql_exporter/"
+            - "{{ sql_exporter_config_dir }}/{{ sql_exporter_config_file_name }}:/etc/sql_exporter/{{ sql_exporter_config_file_name }}"
+            - "{{ sql_exporter_db_cert_dir }}/{{ sql_exporter_db_cert_name }}:/etc/sql_exporter/{{ sql_exporter_db_cert_name }}"
       networks:
         default:
-          external:
-            name: "{{ sql_exporter_docker_network_name }}"
+          external: true
+          name: "{{ sql_exporter_docker_network_name }}"
   when: sql_exporter_use_db_tls
