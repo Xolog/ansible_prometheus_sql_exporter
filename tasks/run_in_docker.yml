@@ -1,6 +1,6 @@
 ---
 - name: Exporters | SQL Exporter | Start SQL Exporter container
-  community.docker_compose_v2:
+  community.docker.docker_compose_v2:
     state: present
     project_name: prometheus_sql_exporter
     definition:
@@ -29,7 +29,7 @@
   when: not sql_exporter_use_db_tls
 
 - name: Exporters | SQL Exporter | Start SQL Exporter container with db tls
-  community.docker_compose_v2:
+  community.docker.docker_compose_v2:
     state: present
     project_name: prometheus_sql_exporter
     definition:

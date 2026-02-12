@@ -15,6 +15,10 @@ sql_exporter_docker_labels:
   service: "exporter"
   type: "sql_exporter"
 
+# To run in Docker, you can use the IP address of the docker0 interface, allowing you to access the port via 'host.docker.internal' from any container.
+sql_exporter_host_address: 127.0.0.1
+sql_exporter_host_port: 9399
+
 # sql_exporter_extra_hosts is variable for add settings to /etc/hosts inside container
 sql_exporter_extra_hosts:
   - "{{ ansible_host }}:{{ ansible_ip }}"
