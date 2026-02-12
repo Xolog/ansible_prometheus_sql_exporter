@@ -28,6 +28,8 @@ sql_exporter_docker_network_name: prom_network
 
 # Args for command line when exporter starts
 sql_exporter_additional_cmd_args: ""
+  # -config.check
+  #       Check configuration and exit. Enable only for debug, its loop restarting&
   # -config.data-source-name string
   #       Data source name to override the value in the configuration file with
   # -config.enable-ping
